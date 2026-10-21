@@ -15,7 +15,9 @@ A repository for creating, reviewing, and validating Agent Skills used by AI age
 .
 ├── README.md
 ├── skills/
-│   └── skill-reviewer/
+│   ├── skill-reviewer/
+│   │   └── SKILL.md
+│   └── miestu-oras/
 │       └── SKILL.md
 └── tests/
     └── README.md
@@ -27,7 +29,8 @@ Each skill lives in its own directory under `skills/` and has a `SKILL.md` file 
 
 | Skill | Purpose |
 |---|---|
-| [skill-reviewer](skills/skill-reviewer/SKILL.md) | Reviews Agent Skills for format, clarity, completeness, and safety. |\n| [miestu-oras](skills/miestu-oras/SKILL.md) | Returns temperature and weather conditions for five major Lithuanian cities using Meteo.lt. |
+| [skill-reviewer](skills/skill-reviewer/SKILL.md) | Reviews Agent Skills for format, clarity, completeness, and safety. |
+| [miestu-oras](skills/miestu-oras/SKILL.md) | Returns temperature and weather conditions for five major Lithuanian cities using Meteo.lt. |
 
 ## Basic review workflow
 
