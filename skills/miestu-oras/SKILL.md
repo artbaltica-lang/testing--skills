@@ -1,5 +1,5 @@
 ---
-name: miestų-oras
+name: miestu-oras
 description: Pateikia aktualią oro temperatūrą ir oro sąlygas penkiuose didžiausiuose Lietuvos miestuose, naudodamas oficialų Meteo.lt šaltinį. Naudok, kai prašoma Lietuvos miestų dabartinio oro, temperatūros ar trumpos orų suvestinės.
 ---
 
