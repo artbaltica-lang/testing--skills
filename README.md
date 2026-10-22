@@ -17,7 +17,15 @@ A repository for creating, reviewing, and validating Agent Skills used by AI age
 ├── skills/
 │   ├── skill-reviewer/
 │   │   └── SKILL.md
-│   └── miestu-oras/
+│   ├── miestu-oras/
+│   │   └── SKILL.md
+│   ├── lt-trip-route/
+│   │   └── SKILL.md
+│   ├── lt-bus-price/
+│   │   └── SKILL.md
+│   ├── lt-train-price/
+│   │   └── SKILL.md
+│   └── lt-trip-compare/
 │       └── SKILL.md
 └── tests/
     └── README.md
@@ -31,6 +39,10 @@ Each skill lives in its own directory under `skills/` and has a `SKILL.md` file 
 |---|---|
 | [skill-reviewer](skills/skill-reviewer/SKILL.md) | Reviews Agent Skills for format, clarity, completeness, and safety. |
 | [miestu-oras](skills/miestu-oras/SKILL.md) | Returns temperature and weather conditions for five major Lithuanian cities using Meteo.lt. |
+| [lt-trip-route](skills/lt-trip-route/SKILL.md) | Prepares a one-way route card with bus codes and train stop IDs for two major Lithuanian cities. |
+| [lt-bus-price](skills/lt-bus-price/SKILL.md) | Reads the cheapest adult bus ticket from autobusubilietai.lt. |
+| [lt-train-price](skills/lt-train-price/SKILL.md) | Reads the cheapest adult train ticket from LTG Link. |
+| [lt-trip-compare](skills/lt-trip-compare/SKILL.md) | Runs the route, bus, and train skills in that order and compares the two prices. |
 
 ## Basic review workflow
 
