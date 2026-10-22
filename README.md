@@ -33,7 +33,7 @@ Each skill lives in its own directory under `skills/` and has a `SKILL.md` file 
 |---|---|
 | [skill-reviewer](skills/skill-reviewer/SKILL.md) | Reviews Agent Skills for format, clarity, completeness, and safety. |
 | [miestu-oras](skills/miestu-oras/SKILL.md) | Returns temperature and weather conditions for five major Lithuanian cities using Meteo.lt. |
-| [get-cities-data](skills/get-cities-data/SKILL.md) | Collects the available Meteo.lt forecast fields for the same five cities into one table. |
+| [get-cities-data](skills/get-cities-data/SKILL.md) | Collects forecast fields for five Lithuanian cities from Meteo.lt, Open-Meteo, MET Norway, wttr.in, and 7Timer into one table. |
 
 ## Basic review workflow
 

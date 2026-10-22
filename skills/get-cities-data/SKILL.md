@@ -1,58 +1,48 @@
 ---
 name: get-cities-data
-description: Surenka penkių didžiausių Lietuvos miestų meteorologinius duomenis iš Meteo.lt ir pateikia juos vienoje lentelėje. Naudok, kai prašoma ne tik temperatūros, bet ir vėjo, drėgmės, slėgio, debesuotumo, kritulių ar kitų Meteo.lt prognozės laukų.
+description: Surenka penkių didžiausių Lietuvos miestų meteorologinius duomenis iš Meteo.lt ir dar keturių viešų orų šaltinių, tada pateikia juos vienoje lentelėje. Naudok, kai prašoma palyginti temperatūrą, vėją, drėgmę, slėgį, debesuotumą ar kritulius iš kelių orų svetainių.
 ---
 
 # Miestų meteorologiniai duomenys
 
 ## Tikslas
 
-Pateikti vieną lentelę su Vilniaus, Kauno, Klaipėdos, Šiaulių ir Panevėžio artimiausios prognozės duomenimis. Šaltinis yra oficialus Meteo.lt API. Temperatūra yra tik vienas stulpelis. Kiti stulpeliai imami iš to paties prognozės įrašo.
+Vienoje lentelėje pateikti Vilniaus, Kauno, Klaipėdos, Šiaulių ir Panevėžio duomenis iš penkių šaltinių. Kiekvienam miestui yra penkios eilutės, po vieną šaltiniui. Tuščias langelis rašomas „nėra“. Trūkstamų skaičių nekurk.
 
-## Darbo eiga
+Koordinatės paimtos iš `https://api.meteo.lt/v1/places/{kodas}`. Kitų koordinačių nenaudok.
 
-1. Nustatyk dabartinį Lietuvos laiką.
-2. Kiekvienam miestui atlik vieną užklausą:
-   - Vilnius: `https://api.meteo.lt/v1/places/vilnius/forecasts/long-term`
-   - Kaunas: `https://api.meteo.lt/v1/places/kaunas/forecasts/long-term`
-   - Klaipėda: `https://api.meteo.lt/v1/places/klaipeda/forecasts/long-term`
-   - Šiauliai: `https://api.meteo.lt/v1/places/siauliai/forecasts/long-term`
-   - Panevėžys: `https://api.meteo.lt/v1/places/panevezys/forecasts/long-term`
-3. Iš `forecastTimestamps` pasirink įrašą, kurio `forecastTimeUtc` artimiausias dabartiniam Lietuvos laikui. Užsirašyk `forecastType` ir `forecastCreationTimeUtc`.
-4. Iš to įrašo imk tik esamus laukus:
-   - `airTemperature`
-   - `feelsLikeTemperature`
-   - `relativeHumidity`
-   - `windSpeed`
-   - `windGust`
-   - `windDirection`
-   - `cloudCover`
-   - `seaLevelPressure`
-   - `totalPrecipitation`
-   - `conditionCode`
-5. Jei lauko atsakyme nėra, langelyje rašyk „nėra“. Nieko neapskaičiuok ir neišversk `conditionCode` į lietuvišką aprašą, jei API jo nedavė.
-6. Jei API nepasiekiamas, atidaryk https://www.meteo.lt/prognozes/lietuvos-miestai/ ir užpildyk tik tuos stulpelius, kuriuos puslapis tikrai rodo. Kitus pažymėk „nėra“.
-7. Patikrink, ar lentelėje yra visos penkios eilutės. Trūkstamo miesto nekeisk kitu ir nepalik tuščios eilutės be paaiškinimo.
+| Miestas | Platuma | Ilguma |
+|---|---:|---:|
+| Vilnius | 54.68705 | 25.28291 |
+| Kaunas | 54.89821 | 23.90448 |
+| Klaipėda | 55.71275 | 21.13505 |
+| Šiauliai | 55.93408 | 23.31578 |
+| Panevėžys | 55.73450 | 24.35781 |
 
-Vienetai, kuriuos naudoja šis API: temperatūra °C, vėjas ir gūsiai m/s, kryptis laipsniais, debesuotumas ir drėgmė procentais, slėgis hPa, krituliai mm.
+## Šaltiniai
+
+Kiekvienam miestui atlik po vieną užklausą į kiekvieną šaltinį.
+
+1. **Meteo.lt.** `https://api.meteo.lt/v1/places/{kodas}/forecasts/long-term`. Kodai: `vilnius`, `kaunas`, `klaipeda`, `siauliai`, `panevezys`. Imk `forecastTimestamps` įrašą, kurio `forecastTimeUtc` artimiausias dabartiniam Lietuvos laikui. Laukai: `airTemperature`, `feelsLikeTemperature`, `relativeHumidity`, `windSpeed`, `windGust`, `windDirection`, `cloudCover`, `seaLevelPressure`, `totalPrecipitation`, `conditionCode`. Vienetai: °C, %, m/s, laipsniai, hPa, mm.
+2. **Open-Meteo.** `https://api.open-meteo.com/v1/forecast?latitude={platuma}&longitude={ilguma}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,cloud_cover,pressure_msl,wind_speed_10m,wind_direction_10m,wind_gusts_10m`. Vienetus imk iš atsakymo `current_units`, ne iš atminties.
+3. **MET Norway.** `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat={platuma}&lon={ilguma}`. Siųsk antraštę `User-Agent` su projekto pavadinimu. Imk pirmą `timeseries` įrašo `instant.details`. Atsakyme vienetų pavadinimų nėra, todėl skaičių neversk ir prie jų nepridėk spėjamų vienetų. Užrašyk lauko pavadinimą.
+4. **wttr.in.** `https://wttr.in/{miestas}?format=j1`. Miestų vardai užklausoje: `Vilnius`, `Kaunas`, `Klaipeda`, `Siauliai`, `Panevezys`. Imk `current_condition`: `temp_C`, `FeelsLikeC`, `humidity`, `windspeedKmph`, `winddirDegree`, `cloudcover`, `pressure`, `precipMM`, `weatherDesc`. Užsirašyk ir `nearest_area`. Jei jis nesutampa su prašytu miestu, prie eilutės pridėk tą vietovės vardą.
+5. **7Timer.** `https://www.7timer.info/bin/api.pl?lon={ilguma}&lat={platuma}&product=civil&output=json`. Imk `dataseries` įrašą su mažiausiu `timepoint`. `temp2m` yra temperatūra. `cloudcover`, `rh2m`, `prec_amount`, `wind10m` ir `weather` perrašyk taip, kaip grąžinta. Vėjo greičio neverk į m/s.
+
+Jei šaltinis neatsako, to šaltinio penkioms eilutėms visuose duomenų langeliuose rašyk „nėra“. Kito šaltinio skaičiais jų neužpildyk.
 
 ## Atsakymo formatas
 
-Atsakyk lietuvių kalba. Viena lentelė:
+Atsakyk lietuvių kalba. Viena lentelė, 25 eilutės:
 
-| Miestas | Prognozės laikas | Temp. °C | Juntamoji °C | Drėgmė % | Vėjas m/s | Gūsiai m/s | Kryptis ° | Debesuotumas % | Slėgis hPa | Krituliai mm | Sąlygų kodas |
-|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
+| Miestas | Šaltinis | Laikas | Temperatūra | Juntamoji | Drėgmė | Vėjas | Gūsiai | Kryptis | Debesuotumas | Slėgis | Krituliai | Sąlygos |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
 
-Po lentele nurodyk:
-
-- **Patikrinimo laikas:** Lietuvos laiku.
-- **Prognozės sudarymo laikas:** `forecastCreationTimeUtc`.
-- **Tipas:** `forecastType`. Parašyk, kad tai prognozė, ne stoties stebėjimas.
-- **Šaltinis:** [Meteo.lt API](https://api.meteo.lt/).
+Po lentele nurodyk patikrinimo laiką Lietuvos laiku ir penkias šaltinių nuorodas: [Meteo.lt](https://api.meteo.lt/), [Open-Meteo](https://open-meteo.com/), [MET Norway](https://api.met.no/), [wttr.in](https://wttr.in/), [7Timer](https://www.7timer.info/). Parašyk, kad tai prognozės, ne vienos stoties stebėjimas.
 
 ## Apribojimai
 
-- Neimk temperatūrų iš atminties. Kiekviena reikšmė turi būti iš ką tik gauto atsakymo.
-- Nedaryk daugiau kaip vienos prognozės užklausos miestui.
-- Nerodyk visos kelių dienų sekos, jei prašoma dabartinės suvestinės.
-- Jei šaltinis neveikia, parašyk tai atskirai ir nepalik lentelės su sugalvotais skaičiais.
+- Kiekviena reikšmė turi būti iš ką tik gauto to šaltinio atsakymo.
+- Nedaryk daugiau kaip vienos užklausos vienam miestui ir vienam šaltiniui.
+- Nerodyk kelių dienų sekos, jei prašoma dabartinės suvestinės.
+- `conditionCode`, `weather_code` ir 7Timer `weather` palik tokius, kokius grąžino šaltinis.
