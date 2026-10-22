@@ -19,6 +19,8 @@ A repository for creating, reviewing, and validating Agent Skills used by AI age
 │   │   └── SKILL.md
 │   ├── miestu-oras/
 │   │   └── SKILL.md
+│   ├── get-cities-data/
+│   │   └── SKILL.md
 │   ├── lt-trip-route/
 │   │   └── SKILL.md
 │   ├── lt-bus-price/
@@ -39,6 +41,7 @@ Each skill lives in its own directory under `skills/` and has a `SKILL.md` file 
 |---|---|
 | [skill-reviewer](skills/skill-reviewer/SKILL.md) | Reviews Agent Skills for format, clarity, completeness, and safety. |
 | [miestu-oras](skills/miestu-oras/SKILL.md) | Returns temperature and weather conditions for five major Lithuanian cities using Meteo.lt. |
+| [get-cities-data](skills/get-cities-data/SKILL.md) | Collects the available Meteo.lt forecast fields for the same five cities into one table. |
 | [lt-trip-route](skills/lt-trip-route/SKILL.md) | Prepares a one-way route card with bus codes and train stop IDs for two major Lithuanian cities. |
 | [lt-bus-price](skills/lt-bus-price/SKILL.md) | Reads the cheapest adult bus ticket from autobusubilietai.lt. |
 | [lt-train-price](skills/lt-train-price/SKILL.md) | Reads the cheapest adult train ticket from LTG Link. |
